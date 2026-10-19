@@ -90,6 +90,10 @@ class AuthorizationCreateParams(RequestOptions):
     """
     Stripe's assessment of the fraud risk for this authorization.
     """
+    type: NotRequired[Literal["payment"]]
+    """
+    The type of the authorization object, for example a payment authorization, an original credit authorization, or a refund authorization.
+    """
     verification_data: NotRequired["AuthorizationCreateParamsVerificationData"]
     """
     Verifications that Stripe performed on information that the cardholder provided to the merchant.
