@@ -172,6 +172,8 @@ def _api_encode(
                     for k, v in _api_encode(subdict):
                         yield (k, v)
                 else:
+                    if isinstance(sv, bool):
+                        sv = str(sv).lower()
                     yield (encoded_key, sv)
         elif isinstance(value, dict) or hasattr(value, "_data"):
             subdict = _encode_nested_dict(key, value)

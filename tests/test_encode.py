@@ -86,6 +86,23 @@ class TestApiEncode:
         result = list(_api_encode({"active": True, "deleted": False}))
         assert result == [("active", "true"), ("deleted", "false")]
 
+    def test_encode_boolean_list_element(self):
+        """Test that booleans directly inside lists are encoded as lowercase strings.
+
+        Regression test for issue #1947.
+        """
+        result = list(
+            _api_encode(
+                {"active": True, "flags": [True, False], "nested": {"on": False}}
+            )
+        )
+        assert result == [
+            ("active", "true"),
+            ("flags[0]", "true"),
+            ("flags[1]", "false"),
+            ("nested[on]", "false"),
+        ]
+
     def test_encode_list_value(self):
         """Test that list values are encoded with indexed keys."""
         result = list(_api_encode({"items": ["item1", "item2", "item3"]}))
